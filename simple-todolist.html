@@ -1,0 +1,50 @@
+<head>
+  <title>Todo List</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Список задач ({{incompleteCount}})</h1>
+
+      <label class="hide-completed">
+        <input type="checkbox" checked="{{hideCompleted}}" />
+        Скрыть завершенные задачи
+      </label>
+
+      {{> loginButtons}}
+
+      {{#if currentUser}}
+        <form class="new-task">
+          <input type="text" name="text" placeholder="Введите новую задачу" />
+        </form>
+      {{/if}}
+    </header>
+
+    <ul>
+      {{#each tasks}}
+        {{> task}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
+  <button class="delete">&times;</button>
+  <span class="textUser"><strong>{{username}}</strong></span>
+  <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+  {{#if isOwner}}
+      <button class="toggle-private">
+        {{#if private}}
+          Скрытая
+        {{else}}
+          Общая
+        {{/if}}
+      </button>
+    {{/if}}
+
+  <span class="text">{{text}}</span>
+</li>
+</template>
